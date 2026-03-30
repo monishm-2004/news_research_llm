@@ -1,8 +1,12 @@
 """
 Streamlit Web UI for News Research Tool
 """
-import streamlit as st
 import os
+
+# Set User-Agent BEFORE importing anything else
+os.environ["USER_AGENT"] = "MyNewsResearchApp/1.0"
+
+import streamlit as st
 from dotenv import load_dotenv
 from news_research import NewsResearchTool
 from pathlib import Path
@@ -47,10 +51,18 @@ def initialize_session_state():
 
 def setup_api_key():
     """Setup and validate Google API key"""
-    api_key = st.secrets.get("GOOGLE_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    # Try to get from .env file first (more reliable)
+    api_key = os.getenv("GOOGLE_API_KEY")
+    
+    # Fallback to secrets if available
+    if not api_key:
+        try:
+            api_key = st.secrets.get("GOOGLE_API_KEY")
+        except Exception:
+            pass
     
     if not api_key:
-        st.error("❌ Google API key not found. Please set GOOGLE_API_KEY in .streamlit/secrets.toml or .env file")
+        st.error("❌ Google API key not found. Please set GOOGLE_API_KEY in .env file")
         st.stop()
     
     return api_key
@@ -203,8 +215,14 @@ def sidebar():
     """Sidebar configuration"""
     st.sidebar.title("⚙️ Configuration")
     
-    # API Key status
-    api_key = st.secrets.get("GOOGLE_API_KEY") or os.getenv("GOOGLE_API_KEY")
+    # API Key status - safely check both sources
+    api_key = os.getenv("GOOGLE_API_KEY")
+    if not api_key:
+        try:
+            api_key = st.secrets.get("GOOGLE_API_KEY")
+        except Exception:
+            pass
+    
     if api_key:
         st.sidebar.success("✅ Google API Key Configured")
     else:
@@ -261,7 +279,8 @@ def main():
     # Setup API key
     try:
         api_key = setup_api_key()
-    except Exception:
+    except Exception as e:
+        st.error(f"❌ Error: {str(e)}")
         st.stop()
     
     # Sidebar
