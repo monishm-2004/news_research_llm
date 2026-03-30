@@ -4,29 +4,16 @@ A modern web application for researching and querying news articles using LangCh
 
 ## Features
 
-✨ **Key Features:**
-- 📤 Upload text files with news articles
-- 🌐 Scrape and process web URLs
-- 🔍 Semantic search using FAISS vector database
-- 🤖 AI-powered question answering with Google Generative AI
-- 📊 Source citation and tracking
-- 💾 Persistent vector store for future queries
-- 📱 Clean, intuitive Streamlit UI
+ **Key Features:**
+-  Upload text files with news articles
+-  Scrape and process web URLs
+-  Semantic search using FAISS vector database
+-  AI-powered question answering with Google Generative AI
+-  Source citation and tracking
+-  Persistent vector store for future queries
+-  Clean, intuitive Streamlit UI
 
-## Project Structure
 
-```
-news_research_app/
-├── app.py                          # Main Streamlit application
-├── news_research.py                # Backend logic and RAG chain
-├── requirements.txt                # Python dependencies
-├── .env.example                    # Environment variables template
-├── .streamlit/
-│   ├── config.toml                # Streamlit configuration
-│   └── secrets.toml.example       # Secrets template
-├── .gitignore                      # Git ignore rules
-└── README.md                       # This file
-```
 
 ## Prerequisites
 
