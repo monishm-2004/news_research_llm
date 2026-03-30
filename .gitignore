@@ -1,0 +1,9 @@
+# Secrets & Environment
+llm/
+.env
+.env.example
+
+# Vector Store Data
+vector_index.faiss
+vector_index.pkl
+
